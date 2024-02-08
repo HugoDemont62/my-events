@@ -33,8 +33,7 @@ const props = defineProps({
     },
 });
 
-
-var adresse = "569 Eldred Vista Willville, SC 76641-8463";
+var adresse = '569 Eldred Vista Willville, SC 76641-8463';
 var ville = adresse.split(',')[0].trim();
 console.log(ville);
 
@@ -57,7 +56,7 @@ console.log(ville);
 
                 <div class="w-full md:w-1/2 p-6 flex flex-col">
                     <img src="https://picsum.photos/1000?random=0" alt=""
-                        class="mx-auto w-96 h-96 object-cover rounded-lg shadow-md" />
+                         class="mx-auto w-96 h-96 object-cover rounded-lg shadow-md"/>
                 </div>
 
                 <div class="w-full md:w-1/2 p-6 space-y-2">
@@ -83,7 +82,8 @@ console.log(ville);
                     <p class="mt-2 text-gray-600">
                         Participants : {{ props.userCount }}
                     </p>
-                    <a v-if="!props.isUserAttached" :href="`/attach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
+                    <a v-if="!props.isUserAttached" :href="`/attach/events/${props.event.id}/users/${props.userId}`"
+                       class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
                     hover:shadow-lg hover:bg-gray-600 focus:outline-none">
                         S'inscrire
                     </a>
@@ -97,11 +97,9 @@ console.log(ville);
                     <div>
                         <ul>
                             Liste des participants :
-                            <li v-for="p in props.userCount"> {{ props.userName.name }} </li>
+                            <li v-for="p in props.userCount"> {{ props.userName.name }}</li>
                         </ul>
                     </div>
-
-
                     <div>
                         Catégorie :
                         <div v-if="props.attachedCategories && props.attachedCategories.length > 0">
@@ -117,11 +115,11 @@ console.log(ville);
                     <div v-if="props.relatedEvents && props.relatedEvents.length > 0">
 
                         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            <li v-for="relatedEvent in props.relatedEvents">
+                            <li v-for="(relatedEvent, index) in props.relatedEvents.slice(0, 4)" :key="index">
                                 <a :href="route('events.show', relatedEvent)" class="block overflow-hidden">
                                     <div class="group">
                                         <img src="https://picsum.photos/1000?random=0" alt=""
-                                            class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />
+                                             class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]"/>
                                         <h3
                                             class="mt-2 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
                                             {{ relatedEvent.title }}
@@ -132,16 +130,15 @@ console.log(ville);
                                             <span class="tracking-wider text-gray-900"> {{ relatedEvent.price }}$</span>
                                         </p>
                                         <p>
-                                            <span
-                                                class="tracking-wider text-red-800 text-xs hover:underline hover:underline-offset-4">
-                                                {{ relatedEvent.location }} {{ relatedEvent.attachedCategories }} </span>
+                                        <span class="tracking-wider text-red-800 text-xs hover:underline hover:underline-offset-4">
+                                            {{ relatedEvent.location }} {{relatedEvent.attachedCategories }}
+                                        </span>
                                         </p>
                                     </div>
                                 </a>
                             </li>
                         </ul>
                     </div>
-
                     <p v-else> Aucun événement connexe trouvé </p>
                 </div>
             </div>
