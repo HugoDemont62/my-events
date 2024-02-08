@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Category;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ class WelcomeController extends Controller
     {
 
         $events = Event::all();
+        $categories = Category::all();
 
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
@@ -21,6 +23,7 @@ class WelcomeController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'events' => $events,
+            'categories' => $categories,
         ]);
     }
 }

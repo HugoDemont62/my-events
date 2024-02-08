@@ -12,9 +12,15 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    categories: {
+        type: Array,
+        required: true,
+    },
 });
 
 console.log(props.events);
+console.log(props.categories);
+
 </script>
 
 
