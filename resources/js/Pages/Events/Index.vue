@@ -2,6 +2,8 @@
 
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
+import FilterEvent from "@/Components/FilterEvent.vue";
+
 
 const props = defineProps({
     events: {
@@ -68,6 +70,9 @@ console.log(date);
                         </select>
                     </div>
                 </div>
+
+                <FilterEvent></FilterEvent>
+
 
 
                 <div id="events-list">
