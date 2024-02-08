@@ -4,6 +4,7 @@ use App\Http\Controllers\AttachEventUserController;
 use App\Http\Controllers\DetachUserEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +21,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
+Route::get('/', [WelcomeController::class, 'index']);
+
 
 Route::middleware([
     'auth:sanctum',

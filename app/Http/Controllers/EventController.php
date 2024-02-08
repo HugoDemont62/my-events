@@ -59,6 +59,7 @@ class EventController extends Controller
         ->toArray();
         $relatedEvents = Event::whereIn('id', $relatedEventIds)->get();
 
+        $locations = Event::all()->where('location', $event->location)->take(4);
 
         return Inertia::render('Events/Show', [
             'event' => $event,
@@ -68,6 +69,7 @@ class EventController extends Controller
             'attachedCategories' => $attachedCategories,
             'relatedEvents' => $relatedEvents, 
             'userCount' => $event->users->count(),
+            'locations' => $locations,
         ]);
     }
 
