@@ -29,11 +29,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/login', [App\Http\Controllers\AuthController::class, 'loginShow'])->name('login');
-Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
-Route::get('/register', [App\Http\Controllers\AuthController::class, 'registerShow'])->name('register');
-Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

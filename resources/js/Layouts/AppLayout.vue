@@ -159,16 +159,6 @@ const logout = () => {
                                 </Dropdown>
                             </div>
                             <div  v-if="!$page.props.auth.user">
-                                <div class="ms-3 relative">
-                                    <Link :href="route('login')" class="text-sm text-gray-600 underline hover:text-gray-900">
-                                        Login
-                                    </Link>
-                                </div>
-                                <div class="ms-3 relative">
-                                    <Link :href="route('register')" class="text-sm text-gray-600 underline hover:text-gray-900">
-                                        Register
-                                    </Link>
-                                </div>
                             </div>
                         </div>
 
@@ -204,8 +194,9 @@ const logout = () => {
                 <!-- Responsive Navigation Menu -->
                 <div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="sm:hidden">
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                        <!-- Link to events page -->
+                        <ResponsiveNavLink :href="route('events.index')" :active="route().current('events.index')">
+                            Events
                         </ResponsiveNavLink>
                     </div>
 
