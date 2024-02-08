@@ -14,22 +14,16 @@ const props = defineProps({
         required: true,
     },
 });
-
 console.log(props.events.data);
 
 let date = props.events["start_date"];
 console.log(date);
-
-
 //const sorted = events.data.sortBy('start_date');
 //sorted.all();
 // {{ event.start_date }}
-
-
 </script>
 
 <script>
-
 
 // function sortByStartDate() {
 //     props.events.data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
@@ -37,7 +31,6 @@ console.log(date);
 // document.getElementById('sort-select').addEventListener('change', sortByStartDate);
 
 </script>
-
 
 <template>
     <AppLayout title="Events">
@@ -69,16 +62,10 @@ console.log(date);
                         </select>
                     </div>
                 </div>
-
-                <FilterEvent></FilterEvent>
-
-
-
                 <div id="events-list">
                     <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                         <li v-for="(event, index) in events.data">
                             <a :href="route('events.show', event)" class="block overflow-hidden">
-                                
                                 <div class="event">
                                     <img src="https://picsum.photos/1000?random=0" alt=""
                                         class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />

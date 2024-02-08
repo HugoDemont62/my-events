@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendEventRegistrationEmail;
 use App\Models\Event;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,6 +19,8 @@ class AttachEventUserController extends Controller
         $event = Event::find($event_id);
 
         $user->events()->attach($event);
+        // Envoie des mails
+        //SendEventRegistrationEmail::dispatch($event, $user);
         return redirect()->route('events.show', ['event' => $event]);
     }
 }

@@ -15,7 +15,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::paginate(8);
+        $events = Event::where('end_date', '>', now())->paginate(8);
         $categories = Category::all();
 
         return Inertia::render('Events/Index', [
@@ -50,14 +50,14 @@ class EventController extends Controller
     public function show(Event $event)
     {
         $isUserAttached = auth()->user()->isAttachedToEvent($event);
-        $attachedCategories = $event->categories; 
+        $attachedCategories = $event->categories;
 
         $relatedEventIds = DB::table('category_event')
         ->whereIn('category_id', $attachedCategories->pluck('id'))
         ->where('event_id', '!=', $event->id)
         ->pluck('event_id')
         ->toArray();
-        $relatedEvents = Event::whereIn('id', $relatedEventIds)->get();
+        $relatedEvents = Event::where('end_date', '>', now())->whereIn('id', $relatedEventIds)->get();
 
         $locations = Event::all()->where('location', $event->location)->take(4);
 
@@ -67,7 +67,7 @@ class EventController extends Controller
             'userName' => auth()->user(),
             'isUserAttached' => $isUserAttached,
             'attachedCategories' => $attachedCategories,
-            'relatedEvents' => $relatedEvents, 
+            'relatedEvents' => $relatedEvents,
             'userCount' => $event->users->count(),
             'locations' => $locations,
         ]);
