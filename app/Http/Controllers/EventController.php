@@ -57,7 +57,7 @@ class EventController extends Controller
         ->where('event_id', '!=', $event->id)
         ->pluck('event_id')
         ->toArray();
-        $relatedEvents = Event::whereIn('id', $relatedEventIds)->get();
+        $relatedEvents = Event::where('end_date', '>', now())->whereIn('id', $relatedEventIds)->get();
 
         $locations = Event::all()->where('location', $event->location)->take(4);
 
