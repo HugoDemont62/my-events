@@ -12,8 +12,8 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-
-        $events = Event::all();
+        // Afficher les 5 prochains événements
+        $events = Event::where('start_date', '>', now())->limit(4)->get();
 
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
