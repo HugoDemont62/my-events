@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import {Head, Link} from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
@@ -7,7 +7,7 @@ const props = defineProps({
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
-    
+
     events: {
         type: Array,
         required: true,
@@ -18,26 +18,22 @@ console.log(props.events);
 </script>
 
 
-
 <template>
     <AppLayout title="Events">
-
         <Head>
             <title>Welcome</title>
         </Head>
-
         <div v-if="!$page.props.auth.user" class="sm:fixed sm:top-0 sm:end-0 p-6 text-end z-10">
             <Link v-if="canLogin" :href="route('login')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-            Log in
+                  class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                Log in
             </Link>
 
             <Link v-if="canRegister" :href="route('register')"
-                class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
-            Register
+                  class="ms-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                Register
             </Link>
         </div>
-
         <div class="sm:mx-auto sm:w-full sm:max-w-md">
             <div class="text-center">
                 <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
@@ -48,14 +44,7 @@ console.log(props.events);
                 </p>
             </div>
         </div>
-
-
-
-
-
-
         <section class="px-8 py-12">
-
             <div id="events-list">
                 <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <li v-for="(event, index) in props.events">
@@ -63,7 +52,7 @@ console.log(props.events);
 
                             <div class="event">
                                 <img src="https://picsum.photos/1000?random=0" alt=""
-                                    class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />
+                                     class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]"/>
                                 <h3 class="mt-2 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
                                     {{ event.title }}
                                 </h3>
@@ -85,8 +74,6 @@ console.log(props.events);
                 </ul>
             </div>
         </section>
-
-
 
 
     </AppLayout>
