@@ -16,17 +16,28 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $startDate = $this->faker->dateTimeBetween('now', '+2 years');
-        $endDate = $this->faker->dateTimeBetween($startDate, '+3 years');
+        $faker = \Faker\Factory::create('fr_FR');
+
+        $startDate = $faker->dateTimeBetween('now', '+2 years');
+        $endDate = $faker->dateTimeBetween($startDate, '+3 years');
+
+        // Liste d'adresses prédéfinies
+        $predefinedAddresses = [
+            '123 Rue de Paris, 75000 Paris',
+            '456 Boulevard Saint-Germain, 75000 Paris',
+            '789 Avenue des Champs-Élysées, 75000 Paris',
+        ];
+
+        $location = $faker->randomElement($predefinedAddresses);
 
         return [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
+            'title' => $faker->sentence,
+            'description' => $faker->paragraph,
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'location' => $this->faker->address,
-            'capacity' => $this->faker->numberBetween(50, 200),
-            'price' => $this->faker->numberBetween(0, 1000)
+            'location' => $location,
+            'capacity' => $faker->numberBetween(50, 200),
+            'price' => $faker->numberBetween(0, 1000)
         ];
     }
 }
