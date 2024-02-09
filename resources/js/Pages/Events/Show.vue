@@ -11,8 +11,8 @@ const props = defineProps({
         type: Number,
         required: true,
     },
-    userName: {
-        type: String,
+    participants: {
+        type: Array,
         required: true,
     },
     locations: {
@@ -33,6 +33,10 @@ const props = defineProps({
     },
     relatedEvents: {
         type: Array,
+        required: true,
+    },
+    isAuthenticated: {
+        type: Boolean,
         required: true,
     },
 });
@@ -56,7 +60,7 @@ const props = defineProps({
 
                 <div class="w-full md:w-1/2 p-6 flex flex-col">
                     <img src="https://picsum.photos/1000?random=0" alt=""
-                        class="mx-auto w-96 h-96 object-cover rounded-lg shadow-md" />
+                         class="mx-auto w-96 h-96 object-cover rounded-lg shadow-md"/>
                 </div>
 
                 <div class="w-full md:w-1/2 p-6 space-y-2">
@@ -82,21 +86,32 @@ const props = defineProps({
                     <p class="mt-2 text-gray-600">
                         Participants : {{ props.userCount }}
                     </p>
-                    <a v-if="!props.isUserAttached" :href="`/attach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
-                    hover:shadow-lg hover:bg-gray-600 focus:outline-none">
-                        S'inscrire
-                    </a>
-                    <a v-else :href="`/detach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-600 rounded shadow
-                    hover:shadow-lg hover:bg-red-500 focus:outline-none">
-                        Se désinscrire
-                    </a>
+
+                    <div v-if="props.isAuthenticated">
+                        <a v-if="!props.isUserAttached" :href="`/attach/events/${props.event.id}/users/${props.userId}`"
+                           class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
+        hover:shadow-lg hover:bg-gray-600 focus:outline-none">
+                            S'inscrire
+                        </a>
+                        <a v-else :href="`/detach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-600 rounded shadow
+        hover:shadow-lg hover:bg-red-500 focus:outline-none">
+                            Se désinscrire
+                        </a>
+                    </div>
+                    <div v-else>
+                        <a href="/login" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded shadow hover:shadow-lg hover:bg-blue-500 focus:outline-none">
+                            Se connecter
+                        </a>
+                    </div>
                 </div>
 
                 <div class="block">
                     <div>
                         <ul>
                             Liste des participants :
-                            <li v-for="p in props.userCount"> {{ props.userName.name }}</li>
+                            <li v-for="participant in props.participants" :key="participant.id">
+                                {{ participant.name }}
+                            </li>
                         </ul>
                     </div>
                     <div>
@@ -118,7 +133,7 @@ const props = defineProps({
                                 <a :href="route('events.show', relatedEvent)" class="block overflow-hidden">
                                     <div class="group">
                                         <img src="https://picsum.photos/1000?random=0" alt=""
-                                            class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />
+                                             class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]"/>
                                         <h3
                                             class="mt-2 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
                                             {{ relatedEvent.title }}
@@ -140,24 +155,16 @@ const props = defineProps({
                         </ul>
                     </div>
                     <p v-else> Aucun événement avec la même catégorie trouvé </p>
-
-
-
-
-
                     <h2>Événements dans la même ville :</h2>
-
                     <div v-if="props.locations && props.locations.length > 0">
-
                         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             <li v-for="location in locations">
                                 <div v-if="location.title == event.title"></div>
                                 <div v-else>
                                     <a :href="route('events.show', location)" class="block overflow-hidden">
-
                                         <div class="group">
                                             <img src="https://picsum.photos/1000?random=0" alt=""
-                                                class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />
+                                                 class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]"/>
                                             <h3
                                                 class="mt-2 text-sm text-gray-700 group-hover:underline group-hover:underline-offset-4">
                                                 {{ location.title }}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -49,27 +50,26 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $isUserAttached = auth()->user()->isAttachedToEvent($event);
+        $isUserAttached = false;
+        if (auth()->check()) {
+            $isUserAttached = auth()->user()->isAttachedToEvent($event);
+        }
+
         $attachedCategories = $event->categories;
-
-        $relatedEventIds = DB::table('category_event')
-        ->whereIn('category_id', $attachedCategories->pluck('id'))
-        ->where('event_id', '!=', $event->id)
-        ->pluck('event_id')
-        ->toArray();
+        $relatedEventIds = $event->categories->pluck('events')->flatten()->pluck('id')->toArray();
         $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
-
         $locations = Event::all()->where('location', $event->location)->take(4);
 
         return Inertia::render('Events/Show', [
             'event' => $event,
             'userId' => auth()->id(),
-            'userName' => auth()->user(),
+            'participants' => $event->users,
             'isUserAttached' => $isUserAttached,
             'attachedCategories' => $attachedCategories,
             'relatedEvents' => $relatedEvents,
             'userCount' => $event->users->count(),
             'locations' => $locations,
+            'isAuthenticated' => auth()->check(),
         ]);
     }
 
