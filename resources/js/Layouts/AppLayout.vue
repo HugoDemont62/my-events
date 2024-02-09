@@ -158,8 +158,6 @@ const logout = () => {
                                     </template>
                                 </Dropdown>
                             </div>
-                            <div  v-if="!$page.props.auth.user">
-                            </div>
                         </div>
 
                         <!-- Hamburger -->
