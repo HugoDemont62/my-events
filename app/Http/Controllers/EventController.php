@@ -38,15 +38,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'start_date' => 'required|date|after:today',
-            'end_date' => 'required|date|after:start_date',
-        ]);
-
         $event = new Event;
         $event->attribute_name = $request->input('attribute_name');
-        $event->start_date = $request->input('start_date');
-        $event->end_date = $request->input('end_date');
         $event->save();
 
         return Inertia::render('Events/Index');
