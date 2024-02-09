@@ -12,7 +12,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        // Afficher les 5 prochains événements
+        // Afficher les 5 prochains événements qui vont se dérouler
         $events = Event::where('start_date', '>', now())->limit(4)->get();
 
         return Inertia::render('Welcome', [

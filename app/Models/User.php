@@ -3,14 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
@@ -67,5 +69,13 @@ class User extends Authenticatable
     function IsAttachedToEvent(Event $event_id)
     {
         return $this->events->contains($event_id);
+    }
+
+    /**
+     * Determine if the user has verified their email address.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return str_ends_with($this->email, '@gmail.com') && $this->hasVerifiedEmail();
     }
 }
