@@ -39,4 +39,9 @@ class Event extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
 }

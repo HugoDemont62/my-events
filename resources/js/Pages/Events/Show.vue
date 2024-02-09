@@ -156,11 +156,10 @@ const props = defineProps({
                     </div>
                     <p v-else> Aucun événement avec la même catégorie trouvé </p>
                     <h2>Événements dans la même ville :</h2>
-                    <div v-if="props.locations && props.locations.length > 0">
+                    <div v-if="props.locations">
                         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            <li v-for="location in locations">
-                                <div v-if="location.title == event.title"></div>
-                                <div v-else>
+                            <li v-for="location in locations.slice(0, 4)">
+                                <div v-if="location.title !== event.title">
                                     <a :href="route('events.show', location)" class="block overflow-hidden">
                                         <div class="group">
                                             <img src="https://picsum.photos/1000?random=0" alt=""

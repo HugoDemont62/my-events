@@ -58,7 +58,8 @@ class EventController extends Controller
         $attachedCategories = $event->categories;
         $relatedEventIds = $event->categories->pluck('events')->flatten()->pluck('id')->toArray();
         $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
-        $locations = Event::all()->where('location', $event->location)->take(4);
+        // Same event in the event location Eloquent relationship
+        $locations = Event::where('location', $event->location)->where('id', '!=', $event->id)->get();
 
         return Inertia::render('Events/Show', [
             'event' => $event,
