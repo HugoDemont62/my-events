@@ -42,6 +42,11 @@ console.log(props.events);
                 <p class="mt-2 text-sm text-gray-600">
                     Select a route from the sidebar
                 </p>
+                <!-- link to create event -->
+                <Link :href="route('events.create')"
+                      class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Create Event
+                </Link>
             </div>
         </div>
         <section class="px-8 py-12">
