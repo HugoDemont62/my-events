@@ -12,7 +12,7 @@ return new class extends Migration{
     {
         Schema::create('avis', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('titleReview');
             $table->text('content');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
