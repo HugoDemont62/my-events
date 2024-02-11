@@ -58,8 +58,8 @@ class EventController extends Controller
         $attachedCategories = $event->categories;
         $relatedEventIds = $event->categories->pluck('events')->flatten()->pluck('id')->toArray();
         $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
-        // Same event in the event location Eloquent relationship
         $locations = Event::where('location', $event->location)->where('id', '!=', $event->id)->get();
+        $reviews = Event::where('id', $event->id)->with('reviews')->get();
 
         return Inertia::render('Events/Show', [
             'event' => $event,
@@ -71,6 +71,7 @@ class EventController extends Controller
             'userCount' => $event->users->count(),
             'locations' => $locations,
             'isAuthenticated' => auth()->check(),
+            'reviews' => $reviews,
         ]);
     }
 
