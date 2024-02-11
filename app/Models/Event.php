@@ -44,4 +44,9 @@ class Event extends Model
     {
         return $this->belongsTo(Location::class);
     }
+
+    public function reviews()
+    {
+        return $this->hasMany(Avis::class);
+    }
 }

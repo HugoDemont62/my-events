@@ -21,7 +21,7 @@ class AvisFactory extends Factory
         return [
             'user_id' => User::factory(),
             'event_id' => Event::factory(),
-            'title' => $this->faker->sentence,
+            'titleReview' => $this->faker->sentence,
             'content' => $this->faker->paragraph,
             'grade' => $this->faker->numberBetween(1, 5),
         ];
