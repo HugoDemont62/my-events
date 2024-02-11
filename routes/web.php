@@ -4,6 +4,7 @@ use App\Http\Controllers\AttachEventUserController;
 use App\Http\Controllers\DetachUserEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -43,3 +44,6 @@ Route::resource('users', UserController::class)->except(['index', 'update', 'sto
 Route::get('/attach/events/{event_id}/users/{user_id}', AttachEventUserController::class);
 Route::get('/detach/events/{event_id}/users/{user_id}', DetachUserEventController::class);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/reviews', [ReviewController::class, 'store']);
+});
