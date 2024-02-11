@@ -39,10 +39,12 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $event = new Event;
-        $event->attribute_name = $request->input('attribute_name');
+        $event->title = $request->input('title');
+        $event->description = $request->input('description');
+        $event->admin_id = auth()->id();
         $event->save();
 
-        return Inertia::render('Events/Index');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -80,7 +82,11 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        return Inertia::render('Events/Edit', ['event' => $event]);
+        if (auth()->id() !== $event->user_id) {
+            return redirect()->route('events.index')->with('error', 'You are not authorized to edit this event');
+        }
+
+        return Inertia::render('Events/Create');
     }
 
     /**

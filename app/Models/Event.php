@@ -18,6 +18,7 @@ class Event extends Model
         'capacity',
         'price',
         'image',
+        'admin_id',
     ];
 
     public function setPriceAttribute($value)
