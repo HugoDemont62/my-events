@@ -41,6 +41,11 @@ class EventController extends Controller
         $event = new Event;
         $event->title = $request->input('title');
         $event->description = $request->input('description');
+        $event->location = $request->input('location');
+        $event->price = $request->input('price');
+        $event->start_date = $request->input('start_date');
+        $event->end_date = $request->input('end_date');
+        $event->image = $request->file('image')->store('images');
         $event->admin_id = auth()->id();
         $event->save();
 

@@ -1,115 +1,15 @@
 <template>
     <AppLayout title="Create Event">
         <section class="px-8 py-12">
-            <form method="POST" action="/events">
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="title">
-                        Title
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="text"
-                           name="title"
-                           id="title"
-                           required
-                    >
-
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="description">
-                        Description
-                    </label>
-
-                    <textarea class="border border-gray-400 p-2 w-full"
-                              name="description"
-                              id="description"
-                              required
-                    ></textarea>
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="location">
-                        Location
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="text"
-                           name="location"
-                           id="location"
-                           required
-                    >
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="price">
-                        Price
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="text"
-                           name="price"
-                           id="price"
-                           required
-                    >
-
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="start_date">
-                        Start Date
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="date"
-                           name="start_date"
-                           id="start_date"
-                           required
-                    >
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="end_date">
-                        End Date
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="date"
-                           name="end_date"
-                           id="end_date"
-                           required
-                    >
-
-                </div>
-
-                <div class="mb-6">
-                    <label class="block mb-2 uppercase font-bold text-xs text-gray-700"
-                           for="image">
-                        Image
-                    </label>
-
-                    <input class="border border-gray-400 p-2 w-full"
-                           type="file"
-                           name="image"
-                           id="image"
-                           required
-                    >
-
-                </div>
-
-                <div class="mb-6">
-                    <button type="submit"
-                            class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500"
-                    >
-                        Create
-                    </button>
-                </div>
+            <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                <input type="text" v-model="form.title" placeholder="Title" required>
+                <textarea v-model="form.description" placeholder="Description" required></textarea>
+                <input type="text" v-model="form.location" placeholder="Location" required>
+                <input type="number" step="0.01" v-model="form.price" placeholder="Price" required>
+                <input type="date" v-model="form.start_date" required>
+                <input type="date" v-model="form.end_date" required>
+                <input type="file" @change="handleImageUpload" required>
+                <button type="submit">Submit</button>
             </form>
         </section>
     </AppLayout>
@@ -119,8 +19,43 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 export default {
-    components: {
-        AppLayout
+    components: {AppLayout},
+    data: function () {
+        return {
+            form: {
+                title: '',
+                description: '',
+                location: '',
+                price: '',
+                start_date: '',
+                end_date: '',
+                image: null,
+            }
+        }
+    },
+    methods: {
+        submitForm: function () {
+            let formData = new FormData();
+
+            Object.keys(this.form).forEach(key => {
+                formData.append(key, this.form[key]);
+            });
+
+            axios.post('/events', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        },
+        handleImageUpload(event) {
+            this.form.image = event.target.files[0];
+        },
     }
 }
 </script>
