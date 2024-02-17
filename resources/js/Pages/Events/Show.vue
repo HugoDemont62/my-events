@@ -126,22 +126,28 @@ let submitReview = async () => {
                         Participants : {{ props.userCount }}
                     </p>
 
-                    <div v-if="props.isAuthenticated">
-                        <a v-if="!props.isUserAttached && props.userCount < event.capacity" :href="`/attach/events/${props.event.id}/users/${props.userId}`"
-                           class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
-        hover:shadow-lg hover:bg-gray-600 focus:outline-none">
-                            S'inscrire
-                        </a>
-                        <a v-else :href="`/detach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-600 rounded shadow
-        hover:shadow-lg hover:bg-red-500 focus:outline-none">
-                            Se désinscrire
-                        </a>
+                    <div v-if="props.userCount < event.capacity">
+                        <div v-if="props.isAuthenticated">
+                            <a v-if="!props.isUserAttached"
+                               :href="`/attach/events/${props.event.id}/users/${props.userId}`"
+                               class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
+hover:shadow-lg hover:bg-gray-600 focus:outline-none">
+                                S'inscrire
+                            </a>
+                            <a v-else :href="`/detach/events/${props.event.id}/users/${props.userId}`" class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-red-600 rounded shadow
+hover:shadow-lg hover:bg-red-500 focus:outline-none">
+                                Se désinscrire
+                            </a>
+                        </div>
+                        <div v-else>
+                            <a href="/login"
+                               class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded shadow hover:shadow-lg hover:bg-blue-500 focus:outline-none">
+                                Se connecter
+                            </a>
+                        </div>
                     </div>
                     <div v-else>
-                        <a href="/login"
-                           class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-600 rounded shadow hover:shadow-lg hover:bg-blue-500 focus:outline-none">
-                            Se connecter
-                        </a>
+                        <p class="mt-4 text-red-600">Complet</p>
                     </div>
                 </div>
                 <div class="reviews-section flex">
