@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AttachEventUserController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DetachUserEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
@@ -50,3 +51,6 @@ Route::get('/detach/events/{event_id}/users/{user_id}', DetachUserEventControlle
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/reviews', [ReviewController::class, 'store']);
 });
+
+Route::get('/categories', [CategoriesController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [CategoriesController::class, 'show'])->name('categories.show');
