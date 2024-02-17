@@ -24,7 +24,6 @@ use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -34,7 +33,6 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
-
 
 Route::resource('events', EventController::class);
 
