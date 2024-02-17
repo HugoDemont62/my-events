@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use Illuminate\Http\Request;
 use App\Models\Event;
 use Inertia\Inertia;
 use Illuminate\Foundation\Application;
