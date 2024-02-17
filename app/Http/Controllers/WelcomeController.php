@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Event;
 use Inertia\Inertia;
@@ -12,10 +13,14 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        // Afficher les 5 prochains événements qui vont se dérouler
         $events = Event::where('start_date', '>', now())->limit(4)->get();
+        $popularCategories = Category::withCount('events')
+            ->orderBy('events_count', 'desc')
+            ->take(5)
+            ->get();
 
         return Inertia::render('Welcome', [
+            'popularCategories' => $popularCategories,
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'laravelVersion' => Application::VERSION,

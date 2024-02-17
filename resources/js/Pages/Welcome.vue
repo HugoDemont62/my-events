@@ -12,6 +12,10 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    popularCategories: {
+        type: Array,
+        required: true,
+    },
 });
 
 console.log(props.events);
@@ -75,6 +79,15 @@ console.log(props.events);
                                 </p>
                             </div>
                         </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="popular-categories">
+                <h2>Popular Categories</h2>
+                <ul>
+                    <li v-for="(category, index) in props.popularCategories" :key="index">
+                        <img :src="`https://via.placeholder.com/150?text=${category.name}`" :alt="category.name" />
+                        <p>{{ category.name }}</p>
                     </li>
                 </ul>
             </div>
