@@ -127,7 +127,7 @@ let submitReview = async () => {
                     </p>
 
                     <div v-if="props.isAuthenticated">
-                        <a v-if="!props.isUserAttached" :href="`/attach/events/${props.event.id}/users/${props.userId}`"
+                        <a v-if="!props.isUserAttached && props.userCount < event.capacity" :href="`/attach/events/${props.event.id}/users/${props.userId}`"
                            class="mt-4 block w-full px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-gray-700 rounded shadow
         hover:shadow-lg hover:bg-gray-600 focus:outline-none">
                             S'inscrire
