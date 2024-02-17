@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('capacity');
             $table->bigInteger('price')->default(0);
             $table->string('image')->nullable();
+            $table->foreignId('admin_id')->constrained('users');
             $table->timestamps();
         });
     }
