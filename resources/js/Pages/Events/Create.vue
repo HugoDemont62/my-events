@@ -1,16 +1,22 @@
 <template>
     <AppLayout title="Create Event">
-        <section class="px-8 py-12">
-            <form @submit.prevent="submitForm" enctype="multipart/form-data">
-                <input type="text" v-model="form.title" placeholder="Title" required>
-                <textarea v-model="form.description" placeholder="Description" required></textarea>
-                <input type="text" v-model="form.location" placeholder="Location" required>
-                <input type="number" step="0.01" v-model="form.price" placeholder="Price" required>
-                <input type="date" v-model="form.start_date" required>
-                <input type="date" v-model="form.end_date" required>
-                <input type="file" @change="handleImageUpload" required>
-                <button type="submit">Submit</button>
-            </form>
+        <section class="px-8 py-12 flex">
+            <!-- Form Section -->
+            <div class="w-1/2">
+                <form action="/events" method="post" enctype="multipart/form-data" class="space-y-4">
+                    <input type="text" name="title" placeholder="Title" required class="w-full p-2 border border-gray-300 rounded">
+                    <textarea name="description" placeholder="Description" required class="w-full p-2 border border-gray-300 rounded"></textarea>
+                    <input type="text" name="location" placeholder="Location" required class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" step="0.01" name="price" placeholder="Price" required class="w-full p-2 border border-gray-300 rounded">
+                    <input type="number" name="capacity" placeholder="Capacity" required class="w-full p-2 border border-gray-300 rounded">
+                    <input type="date" name="start_date" required class="w-full p-2 border border-gray-300 rounded">
+                    <input type="date" name="end_date" required class="w-full p-2 border border-gray-300 rounded">
+                    <input type="file" name="image" required class="w-full p-2 border border-gray-300 rounded">
+                    <button type="submit" class="w-full p-2 bg-blue-500 text-white rounded">Submit</button>
+                </form>
+            </div>
+            <div class="w-1/2">
+            </div>
         </section>
     </AppLayout>
 </template>
@@ -20,44 +26,12 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 
 export default {
     components: {AppLayout},
-    data: function () {
+    data() {
         return {
-            form: {
-                title: '',
-                description: '',
-                location: '',
-                price: '',
-                start_date: '',
-                end_date: '',
-                image: null,
-            }
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         }
-    },
-    methods: {
-        submitForm: function () {
-            let formData = new FormData();
-
-            Object.keys(this.form).forEach(key => {
-                formData.append(key, this.form[key]);
-            });
-
-            axios.post('/events', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-            .then(response => {
-                console.log(response);
-            })
-            .catch(error => {
-                console.log(error);
-            });
-        },
-        handleImageUpload(event) {
-            this.form.image = event.target.files[0];
-        },
     }
-}
+};
 </script>
 
 <style scoped></style>

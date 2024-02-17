@@ -38,10 +38,15 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'You must be logged in to create an event');
+        }
+
         $event = new Event;
         $event->title = $request->input('title');
         $event->description = $request->input('description');
         $event->location = $request->input('location');
+        $event->capacity = $request->input('capacity');
         $event->price = $request->input('price');
         $event->start_date = $request->input('start_date');
         $event->end_date = $request->input('end_date');
