@@ -19,8 +19,6 @@ const props = defineProps({
 });
 
 console.log(props.events);
-console.log(props.categories);
-
 </script>
 
 
@@ -85,11 +83,12 @@ console.log(props.categories);
                 </ul>
             </div>
             <div class="popular-categories">
-                <h2>Popular Categories</h2>
-                <ul>
+                <h2 class=" mb-6 text-xl font-extrabold text-gray-900">Popular Categories</h2>
+                <ul class="flex space-x-12">
                     <li v-for="(category, index) in props.popularCategories" :key="index">
                         <a :href="route('categories.show', category)" class="block overflow-hidden">
-                            <img :src="`https://via.placeholder.com/150?text=${category.name}`" :alt="category.name" />
+                            <img :src="`https://picsum.photos/1000?random=0`" :alt="category.name"
+                            class="h-[200px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[200px]" />
                             <p>{{ category.name }}</p>
                         </a>
                     </li>

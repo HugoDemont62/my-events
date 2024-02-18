@@ -15,7 +15,7 @@ class WelcomeController extends Controller
         $events = Event::where('start_date', '>', now())->limit(4)->get();
         $popularCategories = Category::withCount('events')
             ->orderBy('events_count', 'desc')
-            ->take(5)
+            ->take(4)
             ->get();
 
         return Inertia::render('Welcome', [
@@ -25,7 +25,6 @@ class WelcomeController extends Controller
             'laravelVersion' => Application::VERSION,
             'phpVersion' => PHP_VERSION,
             'events' => $events,
-            'categories' => $categories,
         ]);
     }
 }
