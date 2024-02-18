@@ -214,8 +214,10 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                     <div class="mb-4">
                         <h2 class="text-2xl font-bold mb-2">Catégorie.s :</h2>
                         <div v-if="props.attachedCategories && props.attachedCategories.length > 0">
-                            <p v-for="category in props.attachedCategories" class="mb-1"> {{ category.name }}
+                            <a :href="route('categories.show', attachedCategories)" class="block overflow-hidden">
+                            <p v-for="category in props.attachedCategories" class="mb-1 underline-offset-1"> {{ category.name }}
                             </p>
+                            </a>
                         </div>
                         <p v-else class="text-gray-500">Pas de catégorie attachée</p>
                     </div>
