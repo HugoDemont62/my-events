@@ -71,7 +71,7 @@ class EventController extends Controller
         $relatedEventIds = $event->categories->pluck('events')->flatten()->pluck('id')->toArray();
         $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
         $locations = Event::where('location', $event->location)->where('id', '!=', $event->id)->get();
-        $reviews = $event->reviews()->latest()->take(3)->get();
+        $reviews = $event->reviews()->latest()->take(4)->get();
 
         return Inertia::render('Events/Show', [
             'event' => $event,

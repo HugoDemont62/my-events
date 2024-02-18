@@ -153,9 +153,9 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
 
                 <div class="block reviews-section">
                     <!-- Formulaire pour poster un nouvel avis -->
-                    <div v-if="props.isUserAttached" class="w-full ml-8">
-                        <h2 class="text-2xl font-bold mb-4">Poster un avis</h2>
-                        <form @submit.prevent="submitReview" class="space-y-4">
+                    <div v-if="props.isUserAttached" class="w-2/4">
+                        <h2 class="text-2xl font-bold my-12">Poster un avis</h2>
+                        <form @submit.prevent="submitReview" class="space-y-4 m-8">
                             <div>
                                 <label for="reviewTitle" class="block text-sm font-medium text-gray-700">Titre:</label>
                                 <input id="reviewTitle" v-model="newReview.titleReview" type="text" required
@@ -171,7 +171,7 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
 
                             <div>
                                 <label for="reviewGrade" class="block text-sm font-medium text-gray-700">Note:</label>
-                                <input id="reviewGrade" v-model="newReview.grade" type="number" min="0" max="10" required
+                                <input id="reviewGrade" v-model="newReview.grade" type="number" min="0" max="5" required
                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
 
