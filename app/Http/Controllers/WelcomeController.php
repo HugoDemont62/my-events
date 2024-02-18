@@ -13,8 +13,7 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-
-        $events = Event::all();
+        $events = Event::where('end_date', '>', now())->limit(4)->get();
         $categories = Category::all();
 
         return Inertia::render('Welcome', [
