@@ -85,18 +85,23 @@ let submitReview = async () => {
 
 <template>
     <AppLayout title="Events">
+
         <section class="px-8 py-12">
+
             <div class="container mx-auto flex flex-wrap pb-12">
+
                 <header class="w-full text-left pb-6">
                     <h2 class="text-3xl font-bold text-gray-900">Evenements</h2>
                     <p class="mt-4 text-6xl font-bold">
                         {{ event.title }}
                     </p>
                 </header>
+
                 <div class="w-full md:w-1/2 p-6 flex flex-col">
                     <img src="https://picsum.photos/1000?random=0" alt=""
                          class="mx-auto w-96 h-96 object-cover rounded-lg shadow-md"/>
                 </div>
+
                 <div class="w-full md:w-1/2 p-6 space-y-2">
                     <span
                         class="inline-block bg-red-200 text-red-800 text-xs px-2 rounded-full uppercase font-semibold tracking-wide">
@@ -120,6 +125,7 @@ let submitReview = async () => {
                     <p class="mt-2 text-gray-600">
                         Participants : {{ props.userCount }}
                     </p>
+
                     <div v-if="props.userCount < event.capacity">
                         <div v-if="props.isAuthenticated">
                             <a v-if="!props.isUserAttached"
@@ -144,21 +150,9 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                         <p class="mt-4 text-red-600">Complet</p>
                     </div>
                 </div>
-                <div class="reviews-section flex">
-                    <div class="w-full">
-                        <h2 class="text-2xl font-bold mb-4">Avis</h2>
-                        <div v-if="props.reviews.length">
-                            <div v-for="review in props.reviews" :key="review.id" class="mb-4">
-                                <h3 class="text-xl font-semibold">{{ review.titleReview }}</h3>
-                                <p class="mt-2">{{ review.content }}</p>
-                                <p class="mt-2 text-sm text-gray-500">Note: {{ review.grade }}</p>
-                                <p class="mt-2 text-sm text-gray-500">Auteur: {{ review.user_id }}</p>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <p class="text-gray-500">Aucun avis pour le moment</p>
-                        </div>
-                    </div>
+
+                <div class="block reviews-section">
+                    <!-- Formulaire pour poster un nouvel avis -->
                     <div v-if="props.isUserAttached" class="w-full ml-8">
                         <h2 class="text-2xl font-bold mb-4">Poster un avis</h2>
                         <form @submit.prevent="submitReview" class="space-y-4">
@@ -167,24 +161,47 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                                 <input id="reviewTitle" v-model="newReview.titleReview" type="text" required
                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
+
                             <div>
                                 <label for="reviewContent"
                                        class="block text-sm font-medium text-gray-700">Contenu:</label>
                                 <textarea id="reviewContent" v-model="newReview.content" required
                                           class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"></textarea>
                             </div>
+
                             <div>
                                 <label for="reviewGrade" class="block text-sm font-medium text-gray-700">Note:</label>
-                                <input id="reviewGrade" v-model="newReview.grade" type="number" required
+                                <input id="reviewGrade" v-model="newReview.grade" type="number" min="0" max="10" required
                                        class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             </div>
+
                             <button type="submit"
                                     class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Poster
                             </button>
                         </form>
                     </div>
+
+                    <!-- Section des avis -->
+                    <div class="w-full">
+                        <h2 class="text-2xl font-bold mt-12">Avis</h2>
+
+                        <!-- Afficher les avis existants -->
+                        <div v-if="props.reviews.length" class="flex">
+                            <div v-for="review in props.reviews" :key="review.id" class="m-8 border-2 rounded p-8">
+                                <h3 class="text-xl font-semibold">{{ review.titleReview }}</h3>
+                                <p class="mt-2">{{ review.content }}</p>
+                                <p class="mt-2 text-sm text-gray-500">Note: {{ review.grade }}</p>
+                                <!-- get the user name with the user_id -->
+                                <p class="mt-2 text-sm text-gray-500">Auteur: {{ review.user_id }}</p>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <p class="text-gray-500">Aucun avis pour le moment</p>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="block mt-8">
                     <div class="mb-4">
                         <h2 class="text-2xl font-bold mb-2">Liste des participants :</h2>
@@ -195,7 +212,7 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                         </ul>
                     </div>
                     <div class="mb-4">
-                        <h2 class="text-2xl font-bold mb-2">Catégorie :</h2>
+                        <h2 class="text-2xl font-bold mb-2">Catégorie.s :</h2>
                         <div v-if="props.attachedCategories && props.attachedCategories.length > 0">
                             <p v-for="category in props.attachedCategories" class="mb-1"> {{ category.name }}
                             </p>
@@ -266,8 +283,12 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                     </div>
                     <p v-else class="text-gray-500">Aucun événement avec la même ville trouvé</p>
                 </div>
+
             </div>
+
+
         </section>
+
     </AppLayout>
 </template>
 
