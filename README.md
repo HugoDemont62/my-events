@@ -26,3 +26,12 @@ Pour utiliser le projet, il suffit de lancer le serveur avec la commande `php ar
 
 ## Screenshots
 
+![Accueil: login / register, création events (récupération du form mais aucun envoi vers la bdd), affichage des 5 prochains events et 5 catégories les plus populaires](./screenshots/accueil.png)
+
+![Event: Affichage d'un event, possibilité de s'inscrire, de laisser un avis, affichage des catégories / participants, affichage de 4 events de même catégorie et 4 events dans la même ville](./screenshots/event.png)
+
+![Events: Affichage de tous les events, pagination, trie par date et prix](./screenshots/events.png)
+
+![Categories: Affichage de toutes les catégories](./screenshots/categories.png)
+
+![Admin: Panel admin avec possibilité de modifier / créer des events, categories et users](./screenshots/admin.png)
