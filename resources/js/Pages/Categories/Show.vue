@@ -1,8 +1,8 @@
 <template>
     <AppLayout>
         <div>
-            <h1>{{ props.category.name }}</h1>
-            <ul>
+            <h1 class="m-6 text-xl font-extrabold text-gray-900">{{ props.category.name }}</h1>
+            <ul class="flex flex-wrap gap-4 space-x-4 m-6">
                 <li v-for="(event, index) in props.events" :key="index">
                     <a :href="route('events.show', event)" class="block overflow-hidden">
                         <div class="event">
