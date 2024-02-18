@@ -86,8 +86,10 @@ console.log(props.events);
                 <h2>Popular Categories</h2>
                 <ul>
                     <li v-for="(category, index) in props.popularCategories" :key="index">
-                        <img :src="`https://via.placeholder.com/150?text=${category.name}`" :alt="category.name" />
-                        <p>{{ category.name }}</p>
+                        <a :href="route('categories.show', category)" class="block overflow-hidden">
+                            <img :src="`https://via.placeholder.com/150?text=${category.name}`" :alt="category.name" />
+                            <p>{{ category.name }}</p>
+                        </a>
                     </li>
                 </ul>
             </div>
