@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Event;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -38,23 +37,11 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to create an event');
-        }
-
         $event = new Event;
-        $event->title = $request->input('title');
-        $event->description = $request->input('description');
-        $event->location = $request->input('location');
-        $event->capacity = $request->input('capacity');
-        $event->price = $request->input('price');
-        $event->start_date = $request->input('start_date');
-        $event->end_date = $request->input('end_date');
-        $event->image = $request->file('image')->store('images');
-        $event->admin_id = auth()->id();
+        $event->attribute_name = $request->input('attribute_name');
         $event->save();
 
-        return redirect()->route('events.index');
+        return Inertia::render('Events/Index');
     }
 
     /**
@@ -62,28 +49,27 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        $isUserAttached = false;
-        if (auth()->check()) {
-            $isUserAttached = auth()->user()->isAttachedToEvent($event);
-        }
-
+        $isUserAttached = auth()->user()->isAttachedToEvent($event);
         $attachedCategories = $event->categories;
-        $relatedEventIds = $event->categories->pluck('events')->flatten()->pluck('id')->toArray();
+
+        $relatedEventIds = DB::table('category_event')
+        ->whereIn('category_id', $attachedCategories->pluck('id'))
+        ->where('event_id', '!=', $event->id)
+        ->pluck('event_id')
+        ->toArray();
         $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
-        $locations = Event::where('location', $event->location)->where('id', '!=', $event->id)->get();
-        $reviews = $event->reviews()->latest()->take(4)->get();
+
+        $locations = Event::all()->where('location', $event->location)->take(4);
 
         return Inertia::render('Events/Show', [
             'event' => $event,
             'userId' => auth()->id(),
-            'participants' => $event->users,
+            'userName' => auth()->user(),
             'isUserAttached' => $isUserAttached,
             'attachedCategories' => $attachedCategories,
             'relatedEvents' => $relatedEvents,
             'userCount' => $event->users->count(),
             'locations' => $locations,
-            'isAuthenticated' => auth()->check(),
-            'reviews' => $reviews,
         ]);
     }
 
@@ -92,11 +78,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        if (auth()->id() !== $event->user_id) {
-            return redirect()->route('events.index')->with('error', 'You are not authorized to edit this event');
-        }
-
-        return Inertia::render('Events/Create');
+        return Inertia::render('Events/Edit', ['event' => $event]);
     }
 
     /**

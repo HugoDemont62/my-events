@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
 });
 
+
 Route::resource('users', UserController::class)->except(['index', 'update', 'store']);
 
 // Attach and detach User to Event
