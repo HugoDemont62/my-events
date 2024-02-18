@@ -215,7 +215,7 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                         <h2 class="text-2xl font-bold mb-2">Catégorie.s :</h2>
                         <div v-if="props.attachedCategories && props.attachedCategories.length > 0">
                             <a :href="route('categories.show', attachedCategories)" class="block overflow-hidden">
-                            <p v-for="category in props.attachedCategories" class="mb-1 underline-offset-1"> {{ category.name }}
+                            <p v-for="category in props.attachedCategories" class="mb-1 underline"> {{ category.name }}
                             </p>
                             </a>
                         </div>
