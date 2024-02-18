@@ -12,7 +12,10 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $events = Event::where('start_date', '>', now())->limit(4)->get();
+        $events = Event::where('start_date', '>', now())
+            ->orderBy('start_date', 'asc')
+            ->limit(4)
+            ->get();
         $popularCategories = Category::withCount('events')
             ->orderBy('events_count', 'desc')
             ->take(4)

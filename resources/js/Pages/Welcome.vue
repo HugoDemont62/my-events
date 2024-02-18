@@ -55,6 +55,7 @@ console.log(props.events);
         </div>
         <section class="px-8 py-12">
             <div id="events-list">
+                <h2 class=" mb-6 text-xl font-extrabold text-gray-900">Next Events</h2>
                 <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                     <li v-for="(event, index) in props.events">
                         <a :href="route('events.show', event)" class="block overflow-hidden">
