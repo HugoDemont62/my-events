@@ -14,7 +14,7 @@ return new class extends Migration{
             $table->id();
             $table->string('titleReview');
             $table->text('content');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade')->unique();
             $table->foreignId('event_id')->constrained()->onDelete('cascade');
             $table->integer('grade');
             $table->timestamps();
