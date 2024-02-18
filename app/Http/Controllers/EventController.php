@@ -13,16 +13,34 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $events = Event::where('end_date', '>', now())->paginate(8);
-        $categories = Category::all();
+    public function index(Request $request)
+{
+    $categories = Category::all();
+    $sortBy = $request->input('sort');
 
-        return Inertia::render('Events/Index', [
-            'events' => $events,
-            'categories' => $categories,
-        ]);
+    if ($sortBy === 'startdate') {
+        $events = Event::where('start_date', '>', now())
+            ->orderBy('start_date', 'asc')->paginate(8);
+    } elseif ($sortBy === 'minprice') {
+        $events = Event::where('start_date', '>', now())
+            ->orderBy('price', 'asc')->paginate(8);
+    } elseif ($sortBy === 'maxprice') {
+        $events = Event::where('start_date', '>', now())
+            ->orderBy('price', 'desc')->paginate(8);
+    } else {
+        // Par défaut, récupérer les événements sans tri particulier
+        $events = Event::where('end_date', '>', now())
+            ->orderBy('end_date', 'asc') // Tri par date de fin par défaut
+            ->paginate(8);
     }
+    
+
+    return Inertia::render('Events/Index', [
+        'events' => $events,
+        'categories' => $categories,
+    ]);
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -57,19 +75,22 @@ class EventController extends Controller
         ->where('event_id', '!=', $event->id)
         ->pluck('event_id')
         ->toArray();
-        $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->get();
-
+        $relatedEvents = Event::where('start_date', '>', now())->whereIn('id', $relatedEventIds)->take(4)->get();
+        $reviews = $event->reviews()->latest()->take(4)->get();
         $locations = Event::all()->where('location', $event->location)->take(4);
 
         return Inertia::render('Events/Show', [
             'event' => $event,
             'userId' => auth()->id(),
-            'userName' => auth()->user(),
+            'participants' => $event->users,
+            'userName' => auth()->user(),   
             'isUserAttached' => $isUserAttached,
             'attachedCategories' => $attachedCategories,
             'relatedEvents' => $relatedEvents,
             'userCount' => $event->users->count(),
             'locations' => $locations,
+            'isAuthenticated' => auth()->check(),
+            'reviews' => $reviews,
         ]);
     }
 

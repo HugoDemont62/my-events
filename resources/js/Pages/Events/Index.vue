@@ -3,7 +3,7 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 
-
+const sortSelect = defineModel("null");
 const props = defineProps({
     events: {
         type: Array,
@@ -14,11 +14,14 @@ const props = defineProps({
         required: true,
     },
 });
-console.log(props.events.data);
 
 let date = props.events["start_date"];
 console.log(date);
+console.log(document.getElementById('sortBy'));
 
+const filtrer = () => {
+    window.location.href = route('events.index')+ '?sort=' + sortSelect.value;
+};
 </script>
 
 <template>
@@ -33,21 +36,13 @@ console.log(date);
                     </p>
                 </header>
                 <div class="mt-8 sm:flex sm:items-center sm:justify-between">
-                    <div class="block sm:hidden">
-                        <button
-                            class="flex cursor-pointer items-center gap-2 border-b border-gray-400 pb-1 text-gray-900 transition hover:border-gray-600">
-                            <span class="text-sm font-medium"> Filters & Sorting </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" class="h-4 w-4 rtl:rotate-180">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </button>
-                    </div>
                     <div class="hidden sm:block">
-                        <label for="SortBy" class="sr-only">SortBy</label>
-                        <select id="sort-select" class="h-10 rounded border-gray-300 text-sm">
-                            <option>Trier par</option>
+                        <label for="sortBy" class="sr-only">SortBy</label>
+                        <select @change="filtrer" v-model="sortSelect" id="sort-select" class="h-10 rounded border-gray-300 text-sm">
+                            <option value="null">Trier par</option>
                             <option value="startdate" id="startdate">Par date de début</option>
+                            <option value="minprice" id="minprice">Par prix ascendant</option>
+                            <option value="maxprice" id="maxprice">Par prix descendant</option>
                         </select>
                     </div>
                 </div>

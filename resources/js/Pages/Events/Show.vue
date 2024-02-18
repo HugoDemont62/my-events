@@ -224,7 +224,7 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
 
                     <div v-if="props.relatedEvents && props.relatedEvents.length > 0">
                         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            <li v-for="(relatedEvent, index) in props.relatedEvents.slice(0, 4)" :key="index"
+                            <li v-for="(relatedEvent, index) in props.relatedEvents" :key="index"
                                 class="border p-4 rounded shadow">
                                 <a :href="route('events.show', relatedEvent)" class="block overflow-hidden">
                                     <div class="group">
@@ -254,7 +254,7 @@ hover:shadow-lg hover:bg-red-500 focus:outline-none">
                     <h2 class="text-2xl font-bold mb-2">Événements dans la même ville :</h2>
                     <div v-if="props.locations">
                         <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                            <li v-for="location in locations.slice(0, 4)" class="border p-4 rounded shadow">
+                            <li v-for="location in locations" class="border p-4 rounded shadow">
                                 <div v-if="location.title !== event.title">
                                     <a :href="route('events.show', location)" class="block overflow-hidden">
                                         <div class="group">
