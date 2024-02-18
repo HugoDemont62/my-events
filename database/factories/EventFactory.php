@@ -39,7 +39,6 @@ class EventFactory extends Factory
             'location' => $location,
             'capacity' => $faker->numberBetween(50, 200),
             'price' => $faker->numberBetween(0, 1000),
-            'image' . $faker->image('public/storage/images', 640, 480, null, false),
             'admin_id' => $faker->numberBetween(1, 10),
         ];
     }
