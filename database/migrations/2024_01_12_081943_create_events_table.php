@@ -16,11 +16,12 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->dateTime('start_date');
-            $table->dateTime('end_date')->nullable();
+            $table->dateTime('end_date');
             $table->string('location');
-            $table->integer('capacity')->nullable();
+            $table->integer('capacity');
             $table->bigInteger('price')->default(0);
             $table->string('image')->nullable();
+            $table->foreignId('admin_id')->constrained('users');
             $table->timestamps();
         });
     }

@@ -18,17 +18,6 @@ console.log(props.events.data);
 
 let date = props.events["start_date"];
 console.log(date);
-//const sorted = events.data.sortBy('start_date');
-//sorted.all();
-// {{ event.start_date }}
-</script>
-
-<script>
-
-// function sortByStartDate() {
-//     props.events.data.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
-// }
-// document.getElementById('sort-select').addEventListener('change', sortByStartDate);
 
 </script>
 

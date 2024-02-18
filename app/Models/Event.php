@@ -18,6 +18,7 @@ class Event extends Model
         'capacity',
         'price',
         'image',
+        'admin_id',
     ];
 
     public function setPriceAttribute($value)
@@ -38,5 +39,15 @@ class Event extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Avis::class);
     }
 }

@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AttachEventUserController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\DetachUserEventController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -23,7 +25,6 @@ use Inertia\Inertia;
 
 Route::get('/', [WelcomeController::class, 'index']);
 
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -34,8 +35,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
-
-Route::resource('events', EventController::class);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
+    Route::post('/events', [EventController::class, 'store'])->name('events.store');
+    Route::get('/events', [EventController::class, 'index'])->name('events.index');
+    Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
+});
 
 Route::resource('users', UserController::class)->except(['index', 'update', 'store']);
 
@@ -43,3 +48,9 @@ Route::resource('users', UserController::class)->except(['index', 'update', 'sto
 Route::get('/attach/events/{event_id}/users/{user_id}', AttachEventUserController::class);
 Route::get('/detach/events/{event_id}/users/{user_id}', DetachUserEventController::class);
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/reviews', [ReviewController::class, 'store']);
+});
+
+Route::get('/categories', [CategoriesController::class, 'index'])->name('categories.index');
+Route::get('/categories/{category}', [CategoriesController::class, 'show'])->name('categories.show');

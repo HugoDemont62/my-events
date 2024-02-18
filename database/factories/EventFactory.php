@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Event>
+ * @extends Factory<Event>
  */
 class EventFactory extends Factory
 {
@@ -16,14 +17,30 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('fr_FR');
+
+        $startDate = $faker->dateTimeBetween('now', '+2 years');
+        $endDate = $faker->dateTimeBetween($startDate, '+3 years');
+
+        // Liste d'adresses prédéfinies
+        $predefinedAddresses = [
+            '123 Rue de Paris, 75000 Paris',
+            '456 Boulevard Saint-Germain, 75000 Paris',
+            '789 Avenue des Champs-Élysées, 75000 Paris',
+        ];
+
+        $location = $faker->randomElement($predefinedAddresses);
+
         return [
-            'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph,
-            'start_date' => $this->faker->dateTime,
-            'end_date' => $this->faker->dateTime,
-            'location' => $this->faker->address,
-            'capacity' => $this->faker->numberBetween(50, 200),
-            'price' => $this->faker->numberBetween(0, 1000)
+            'title' => $faker->sentence,
+            'description' => $faker->paragraph,
+            'start_date' => $startDate,
+            'end_date' => $endDate,
+            'location' => $location,
+            'capacity' => $faker->numberBetween(50, 200),
+            'price' => $faker->numberBetween(0, 1000),
+            'image' . $faker->image('public/storage/images', 640, 480, null, false),
+            'admin_id' => $faker->numberBetween(1, 10),
         ];
     }
 }
